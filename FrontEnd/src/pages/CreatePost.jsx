@@ -11,7 +11,7 @@ import { app } from '../firebase';
 
 export default function CreatePost() {
     const { currentUser } = useSelector(state => state.user)
-    const navigate  = useNavigate()
+    const navigate = useNavigate()
     const [files, setFiles] = useState([])
     const [formData, setFormData] = useState({
         imageUrls: [],
@@ -34,14 +34,14 @@ export default function CreatePost() {
             for (let i = 0; i < files.length; i++) {
                 promises.push(storeImage(files[i]));
             }
-            
+
             Promise.all(promises).then((urls) => {
                 setFormData({
                     ...formData, imageUrls: formData.imageUrls.concat(urls)
                 });
                 setImageUploadError(false);
                 setUploading(false);
-                
+
             }).catch((err) => {
                 setImageUploadError('Image upload failed (2mb max per image)');
                 setUploading(false);
@@ -53,29 +53,35 @@ export default function CreatePost() {
     };
 
     const storeImage = async (file) => {
-        return new Promise((resolve, reject) => {
-            const storage = getStorage(app)
-            const fileName = new Date().getTime() + file.title;
-            const storageRef = ref(storage, fileName);
-            const uploadTask = uploadBytesResumable(storageRef, file);
-            uploadTask.on(
-                "state_changed",
-                (snapshot) => {
-                    const progress =
-                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                    console.log(`Upload is ${progress}% done`);
-                },
-                (error) => {
-                    reject(error);
-                },
-                () => {
-                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                        resolve(downloadURL);
-                    });
-                }
-            );
-        });
-    };
+    return new Promise((resolve, reject) => {
+        console.log("Starting image upload");
+
+        const storage = getStorage(app);
+        const fileName = new Date().getTime() + "_" + file.name;
+        const storageRef = ref(storage, fileName);
+        const uploadTask = uploadBytesResumable(storageRef, file);
+
+        uploadTask.on(
+            "state_changed",
+            (snapshot) => {
+                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log(`Upload is ${progress}% done`);
+            },
+            (error) => {
+                console.error("Upload error:", error);
+                reject(error);
+            },
+            () => {
+                console.log("Upload complete");
+                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                    resolve(downloadURL);
+                });
+            }
+        );
+    });
+};
+
+    
 
     const handleRemoveImage = (index) => {
         setFormData({
@@ -139,22 +145,13 @@ export default function CreatePost() {
                         onChange={handleChanges}
                         value={formData.title}
                     />
-                    {/* <input
-                        type="text"
-                        placeholder="Cat Breed"
-                        className=" border-blue-1000 bg-slate-1000 border p-3 rounded-lg"
-                        id='catBreed'
-                        required
-                        onChange={handleChanges}
-                        value={formData.catBreed}
-                    /> */}
                     <select
                         className="border-blue-1000 bg-slate-1000 border p-3 rounded-lg"
                         id="catBreed"
                         required
                         onChange={handleChanges}
                         value={formData.catBreed}
-                    // onChange={(e) => setFormData({ ...formData, catBreed: e.target.value })}
+
                     >
                         <>
                             <option value="">Select Cat Breed</option>
@@ -188,20 +185,14 @@ export default function CreatePost() {
                         onChange={handleChanges}
                         value={formData.age}
                     />
-                    {/* <input
-                        type="text"
-                        placeholder="Sex"
-                        className=" border-blue-1000 bg-slate-1000 border p-3 rounded-lg"
-                        id='sex'
-                        required
-                    /> */}
+
                     <select
                         className="border-blue-1000 bg-slate-1000 border p-3 rounded-lg"
                         id="sex"
                         required
                         value={formData.sex}
                         onChange={handleChanges}
-                    // onChange={(e) => setFormData({ ...formData, sex: e.target.value })}
+
                     >
                         <>
                             <option value="">Select Sex</option>
