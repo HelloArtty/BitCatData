@@ -1,13 +1,17 @@
-const express = require('express');
-const userRoutes = require('./routes/user.route');
-const mysql = require('mysql2');
+
+import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+import express from 'express';
+import authRouter from './routes/auth.route.js';
+import mysql from 'mysql2';
+dotenv.config();
 
 // create a new MySQL connection
 const connection = mysql.createConnection({
     host: 'localhost',
-    user: 'admin123',
-    password: 'admin123',
-    database: 'testdata'
+    user: 'root',
+    password: '',
+    database: 'catweb'
 });
 // connect to the MySQL database
 connection.connect((error) => {
@@ -20,11 +24,21 @@ connection.connect((error) => {
 const app = express();
 
 app.use(express.json());
-app.use('/backend/user', userRoutes);
+app.use(cookieParser());
 
-const port = 4000;
+const port = 3000;
 app.listen(port, () => {
     console.log(`Server is running on http://localhost:${port}`);
 });
 
-app.use('/backend/user', userRoutes);
+app.use("/backend/auth", authRouter)
+
+app.use((err,req,res,next)=>{
+    const statusCode = err.statusCode || 500;
+    const message = err.message || 'Internal Server Error';
+    return res.status(statusCode).json({
+        success : false,
+        statusCode,
+        message,
+    });
+});
