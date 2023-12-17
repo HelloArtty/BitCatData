@@ -15,7 +15,7 @@ export default function CreatePost() {
     const [files, setFiles] = useState([])
     const [formData, setFormData] = useState({
         imageUrls: [],
-        name: '',
+        title: '',
         catBreed: '',
         age: '',
         sex: '',
@@ -25,7 +25,6 @@ export default function CreatePost() {
     const [uploading, setUploading] = useState(false);
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
-    console.log(formData)
 
     const handleImageSubmit = (e) => {
         if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
@@ -35,13 +34,14 @@ export default function CreatePost() {
             for (let i = 0; i < files.length; i++) {
                 promises.push(storeImage(files[i]));
             }
+            
             Promise.all(promises).then((urls) => {
                 setFormData({
                     ...formData, imageUrls: formData.imageUrls.concat(urls)
                 });
                 setImageUploadError(false);
                 setUploading(false);
-
+                
             }).catch((err) => {
                 setImageUploadError('Image upload failed (2mb max per image)');
                 setUploading(false);
@@ -55,7 +55,7 @@ export default function CreatePost() {
     const storeImage = async (file) => {
         return new Promise((resolve, reject) => {
             const storage = getStorage(app)
-            const fileName = new Date().getTime() + file.name;
+            const fileName = new Date().getTime() + file.title;
             const storageRef = ref(storage, fileName);
             const uploadTask = uploadBytesResumable(storageRef, file);
             uploadTask.on(
@@ -91,10 +91,10 @@ export default function CreatePost() {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            if (formData.imageUrls.length < 1) {
-                return setError('You must upload at least one image');
-            }
-            if (formData.name.length < 10 || formData.name.length > 50) {
+            // if (formData.imageUrls.length < 1) {
+            //     return setError('You must upload at least one image');
+            // }
+            if (formData.title.length < 10 || formData.title.length > 50) {
                 return setError('Title must be between 10 and 50 characters');
             }
             if (formData.description.length < 10 || formData.description.length > 500) {
@@ -109,7 +109,7 @@ export default function CreatePost() {
                 },
                 body: JSON.stringify({
                     ...formData,
-                    userRef: currentUser._id,
+                    user_id: currentUser.user_id,
                 }),
             });
             const data = await res.json();
@@ -117,7 +117,7 @@ export default function CreatePost() {
             if (data.success === false) {
                 setError(data.message);
             }
-            navigate(`/post/${data._id}`)
+            navigate(`/post/${data.user_id}`)
         } catch (error) {
             setError(error.message);
             setLoading(false);
@@ -133,11 +133,11 @@ export default function CreatePost() {
                         type="text"
                         placeholder="Title"
                         className=" border-blue-1000 bg-slate-1000 border p-3 rounded-lg"
-                        id='name'
+                        id='title'
                         maxLength="50" minLength="10"
                         required
                         onChange={handleChanges}
-                        value={formData.name}
+                        value={formData.title}
                     />
                     {/* <input
                         type="text"

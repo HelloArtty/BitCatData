@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import express from 'express';
 import authRouter from './routes/auth.route.js';
 import userRouter from './routes/user.route.js';
+import postRouter from './routes/post.route.js';
 import mysql from 'mysql2';
 dotenv.config();
 
@@ -34,6 +35,7 @@ app.listen(port, () => {
 
 app.use("/backend/auth", authRouter)
 app.use("/backend/user", userRouter)
+app.use("/backend/post", postRouter)
 
 app.use((err,req,res,next)=>{
     const statusCode = err.statusCode || 500;
