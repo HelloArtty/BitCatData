@@ -53,34 +53,29 @@ export default function CreatePost() {
     };
 
     const storeImage = async (file) => {
-    return new Promise((resolve, reject) => {
-        console.log("Starting image upload");
-
-        const storage = getStorage(app);
-        const fileName = new Date().getTime() + "_" + file.name;
-        const storageRef = ref(storage, fileName);
-        const uploadTask = uploadBytesResumable(storageRef, file);
-
-        uploadTask.on(
-            "state_changed",
-            (snapshot) => {
-                const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                console.log(`Upload is ${progress}% done`);
-            },
-            (error) => {
-                console.error("Upload error:", error);
-                reject(error);
-            },
-            () => {
-                console.log("Upload complete");
-                getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
-                    resolve(downloadURL);
-                });
-            }
-        );
-    });
-};
-
+        return new Promise((resolve, reject) => {
+            const storage = getStorage(app)
+            const fileName = new Date().getTime() + "_" + file.title;
+            const storageRef = ref(storage, fileName);
+            const uploadTask = uploadBytesResumable(storageRef, file);
+            uploadTask.on(
+                "state_changed",
+                (snapshot) => {
+                    const progress =
+                        (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    console.log(`Upload is ${progress}% done`);
+                },
+                (error) => {
+                    reject(error);
+                },
+                () => {
+                    getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => {
+                        resolve(downloadURL);
+                    });
+                }
+            );
+        });
+    };
     
 
     const handleRemoveImage = (index) => {
