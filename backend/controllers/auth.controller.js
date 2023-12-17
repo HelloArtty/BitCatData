@@ -43,7 +43,7 @@ export const signin = async (req, res, next) => {
                 return next(errorHandler(401, 'Incorrect password!'));
             }
 
-            const token = jwt.sign({ id: validUser._id }, process.env.JWT_SECRET);
+            const token = jwt.sign({ id: validUser.user_id }, process.env.JWT_SECRET);
             const { password: pass, ...rest } = validUser;
             res
                 .cookie('access_token', token, { httpOnly: true })
@@ -125,7 +125,7 @@ export const google = async(req, res, next) => {
         const [row] = await pool.query('SELECT * FROM users WHERE email = ?', [req.body.email]);
         if(row.length > 0) {
             const user = row[0];
-            const token = jwt.sign({ id: user.id }, process.env.JWT_SECRET);
+            const token = jwt.sign({ id: user.user_id }, process.env.JWT_SECRET);
             const { password: pass, ...rest } = user;
             res.cookie('access_token', token, { httpOnly: true }).status(200).json(rest);
         } else {

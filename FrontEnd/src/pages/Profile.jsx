@@ -78,7 +78,7 @@ export default function Profile() {
         e.preventDefault();
         try {
             dispatch(updateUserStart());
-            const res = await fetch(`backend/user/update/${currentUser._id}`, {
+            const res = await fetch(`backend/user/update/${currentUser.user_id}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -101,7 +101,7 @@ export default function Profile() {
     const handleDeleteUser = async () => {
         try {
             dispatch(deleteUserStart());
-            const res = await fetch(`backend/user/delete/${currentUser._id}`, {
+            const res = await fetch(`backend/user/delete/${currentUser.user_id}`, {
                 method: 'DELETE',
             });
             const data = await res.json();
@@ -134,7 +134,7 @@ export default function Profile() {
     const handleShowPost = async () => {
         try {
             setShowPostError(false);
-            const res = await fetch(`backend/user/post/${currentUser._id}`);
+            const res = await fetch(`backend/user/post/${currentUser.user_id}`);
             const data = await res.json();
             if (data.success === false) {
                 setShowPostError(true);
