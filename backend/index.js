@@ -5,6 +5,8 @@ import express from 'express';
 import authRouter from './routes/auth.route.js';
 import userRouter from './routes/user.route.js';
 import postRouter from './routes/post.route.js';
+import contactRouter from './routes/contact.route.js';
+import locationRouter from './routes/location.route.js';
 import mysql from 'mysql2';
 dotenv.config();
 
@@ -36,6 +38,8 @@ app.listen(port, () => {
 app.use("/backend/auth", authRouter)
 app.use("/backend/user", userRouter)
 app.use("/backend/post", postRouter)
+app.use("/backend/contact", contactRouter)
+app.use("/backend/location", locationRouter)
 
 app.use((err,req,res,next)=>{
     const statusCode = err.statusCode || 500;

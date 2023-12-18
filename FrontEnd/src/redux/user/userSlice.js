@@ -70,6 +70,19 @@ const userSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    addLocationStart: (state) => {
+      state.loading = true;
+    },
+    addLocationSuccess: (state, action) => {
+      state.currentUser = action.payload;
+      state.loading = false;
+      state.error = null;
+    },
+    addLocationFailure: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
+    },
+
 
   },
 });
@@ -90,6 +103,9 @@ export const {
   addContactStart,
   addContactSuccess,
   addContactFailure,
+  addLocationStart,
+  addLocationSuccess,
+  addLocationFailure,
 } = userSlice.actions;
 
 export default userSlice.reducer;

@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Inter;
+}
+.row-home{
+    width: 80%;
+    max-width: 1170px;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-gap: 50px;
+    overflow: hidden;
+    padding: 5rem 0;
+    margin: 50px auto;
+}
+
+.row-home .imgWrapper{
+    overflow: hidden;
+}
+
+.row-home .imgWrapper img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.row-home .contentWrapper{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding-left: 30px;
+}
+
+.row-home .contentWrapper h2{
+    font-size: 86px;
+    font-weight: 700;
+    padding-bottom: 20px;
+}
+
+.row-home .contentWrapper p{
+    font-size: 16px;
+    line-height: 26px;
+    padding-bottom: 15px;
+    text-indent: 50px;
+}
+
+.row-home .contentWrapper a{
+    display: inline-block;
+    padding: 15px 30px;
+    background: #000;
+    color: #fff;
+    text-decoration: none;
+    font-size: 16px;
+    font-weight: 500;
+    border-radius: 5px;
+    transition: all 0.3s ease;
+}
+@media screen and (min-width: 1000px) and (max-width: 1200px){
+    .row-home .contentWrapper h2{
+        font-size: 64px;
+    }
+}
+
+@media screen and (max-width: 992px){
+    
+    .row-home{
+        grid-template-columns: 1fr;
+        grid-gap: 50px;
+    }
+
+    .row-home .contentWrapper{
+        padding-left: 0;
+    }
+
+    .row-home .contentWrapper h2{
+        font-size: 60px;
+        text-align: center;
+    }
+    .row-home .contentWrapper a{
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+
+}
+
+@media screen and (max-width: 768px) {
+    .row-home{
+        width: 90%;
+    }
+
+    .row-home .contentWrapper h2{
+        font-size: 54px;
+        padding-bottom: 20px;
+    }
+
+    .row-home .contentWrapper p{
+        line-height: 24px;
+    }
+}
+
+@media screen and (max-width: 575px) {
+    .row-home .contentWrapper h2{
+        font-size: 48px;
+    }
+
+    .row-home .contentWrapper p{
+        line-height: 20px;
+    }
+
+    .row-home .contentWrapper a{
+        padding: 10px 20px;
+        font-size: 14px;
+    }
+}

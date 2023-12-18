@@ -4,15 +4,16 @@ import {
     ref,
     uploadBytesResumable
 } from "firebase/storage";
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { app } from '../firebase';
 
-export default function CreatePost() {
+export default function UpdatePost() {
     const { currentUser } = useSelector(state => state.user)
-    const navigate = useNavigate()
+    const navigate  = useNavigate()
     const [files, setFiles] = useState([])
+    const params = useParams()
     const [formData, setFormData] = useState({
         imageUrls: [],
         title: '',
@@ -26,18 +27,32 @@ export default function CreatePost() {
     const [error, setError] = useState(false);
     const [loading, setLoading] = useState(false);
 
+    useEffect(() => {
+        const fetchPost = async () => {
+            const postId = params.postId;
+            const res = await fetch(`/backend/post/get/${postId}`);
+            const data = await res.json();
+            if(data.success === false){
+                console.log(data.message);
+                return;
+            }
+            setFormData(data);
+        }
+        fetchPost();
+    },[]);
+
+
     const handleImageSubmit = (e) => {
-        if (files.length > 0 && files.length + formData.imageUrls.length < 7) {
+        if (files.length > 0 && files.length + JSON.parse(formData.imageUrls).length < 7) {
             setUploading(true);
             setImageUploadError(false);
             const promises = [];
             for (let i = 0; i < files.length; i++) {
                 promises.push(storeImage(files[i]));
             }
-
             Promise.all(promises).then((urls) => {
                 setFormData({
-                    ...formData, imageUrls: formData.imageUrls.concat(urls)
+                    ...formData, imageUrls: JSON.stringify(JSON.parse(formData.imageUrls).concat(urls))
                 });
                 setImageUploadError(false);
                 setUploading(false);
@@ -55,7 +70,7 @@ export default function CreatePost() {
     const storeImage = async (file) => {
         return new Promise((resolve, reject) => {
             const storage = getStorage(app)
-            const fileName = new Date().getTime() + "_" + file.title;
+            const fileName = new Date().getTime() + file.name;
             const storageRef = ref(storage, fileName);
             const uploadTask = uploadBytesResumable(storageRef, file);
             uploadTask.on(
@@ -76,12 +91,11 @@ export default function CreatePost() {
             );
         });
     };
-    
 
     const handleRemoveImage = (index) => {
         setFormData({
             ...formData,
-            imageUrls: formData.imageUrls.filter((_, i) => i !== index),
+            imageUrls: JSON.parse(formData.imageUrls).filter((_, i) => i !== index),
         });
     };
 
@@ -95,7 +109,7 @@ export default function CreatePost() {
             if (formData.imageUrls.length < 1) {
                 return setError('You must upload at least one image');
             }
-            if (formData.title.length < 10 || formData.title.length > 50) {
+            if (formData.title.length < 5 || formData.title.length > 50) {
                 return setError('Title must be between 10 and 50 characters');
             }
             if (formData.description.length < 10 || formData.description.length > 500) {
@@ -103,7 +117,7 @@ export default function CreatePost() {
             }
             setLoading(true);
             setError(false);
-            const res = await fetch('/backend/post/create', {
+            const res = await fetch(`/backend/post/update/${params.postId}`, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -127,7 +141,7 @@ export default function CreatePost() {
 
     return (
         <main className='p-3 max-w-4xl mx-auto'>
-            <h1 className='text-3xl font-semibold text-center my-7'>Create a Post</h1>
+            <h1 className='text-3xl font-semibold text-center my-7'>Edit Post</h1>
             <form onSubmit={handleSubmit} className='flex flex-col sm:flex-row gap-4'>
                 <div className='flex flex-col gap-4 flex-1'>
                     <input
@@ -146,29 +160,28 @@ export default function CreatePost() {
                         required
                         onChange={handleChanges}
                         value={formData.catBreed}
-
                     >
                         <>
-                            <option value="">Select Cat Breed</option>
-                            <option value="american shorthair">American Shorthair</option>
-                            <option value="american curl">American Curl</option>
-                            <option value="balinese">Balinese</option>
-                            <option value="bengal">Bengal</option>
-                            <option value="british shorthair">British Shorthair</option>
-                            <option value="chinchilla">Chinchilla</option>
-                            <option value="exotic shorthair">Exotic Shorthair</option>
-                            <option value="scottish fold">Scottish Fold</option>
-                            <option value="korat">Korat</option>
-                            <option value="khao manee">Khao Manee</option>
-                            <option value="maine coon">Maine Coon</option>
-                            <option value="munchkin">Munchkin</option>
-                            <option value="norwegian forest">Norwegian Forest</option>
-                            <option value="persian">Persian</option>
-                            <option value="ragdoll">Ragdoll</option>
-                            <option value="russian blue">Russian Blue</option>
-                            <option value="siamese">Siamese</option>
-                            <option value="snowshoe">Snowshoe</option>
-                            <option value="sphynx">Sphynx</option>
+                        <option value="">Select Cat Breed</option>
+                            <option value="American Shorthair">American Shorthair</option>
+                            <option value="American Curl">American Curl</option>
+                            <option value="Balinese">Balinese</option>
+                            <option value="Bengal">Bengal</option>
+                            <option value="British Shorthair">British Shorthair</option>
+                            <option value="Chinchilla">Chinchilla</option>
+                            <option value="Exotic Shorthair">Exotic Shorthair</option>
+                            <option value="Scottish Fold">Scottish Fold</option>
+                            <option value="Korat">Korat</option>
+                            <option value="Khao Manee">Khao Manee</option>
+                            <option value="Maine Coon">Maine Coon</option>
+                            <option value="Munchkin">Munchkin</option>
+                            <option value="Norwegian Forest">Norwegian Forest</option>
+                            <option value="Persian">Persian</option>
+                            <option value="Ragdoll">Ragdoll</option>
+                            <option value="Russian Blue">Russian Blue</option>
+                            <option value="Siamese">Siamese</option>
+                            <option value="Snowshoe">Snowshoe</option>
+                            <option value="Sphynx">Sphynx</option>
                         </>
                     </select>
                     <input
@@ -180,19 +193,17 @@ export default function CreatePost() {
                         onChange={handleChanges}
                         value={formData.age}
                     />
-
                     <select
                         className="border-blue-1000 bg-slate-1000 border p-3 rounded-lg"
                         id="sex"
                         required
                         value={formData.sex}
                         onChange={handleChanges}
-
                     >
                         <>
                             <option value="">Select Sex</option>
-                            <option value="male">Male</option>
-                            <option value="female">Female</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
                         </>
                     </select>
                     <textarea
@@ -233,7 +244,7 @@ export default function CreatePost() {
                         {imageUploadError && imageUploadError}
                     </p>
                     {formData.imageUrls.length > 0 &&
-                        formData.imageUrls.map((url, index) => (
+                        JSON.parse(formData.imageUrls).map((url, index) => (
                             <div
                                 key={url}
                                 className='flex justify-between p-3 border items-center'
@@ -254,7 +265,7 @@ export default function CreatePost() {
                         ))}
                     <button disabled={loading || uploading}
                         className='p-3 bg-blue-1001 text-white rounded-lg uppercase hover:opacity-95 disabled:opacity-80'>
-                        {loading ? 'Creating...' : 'Create Post'}
+                        {loading ? 'Updating...' : 'Edit Post'}
                     </button>
                     {error && <p className='text-red-700 text-sm'>{error}</p>}
                 </div>

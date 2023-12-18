@@ -41,33 +41,18 @@ export const deleteUser = async (req, res, next) => {
     }
 }
 
-// export const getUserPost = async (req, res, next) => {
-//     console.log(req.body);
-//     console.log(req.user.id);
-//     console.log(req.params.id);
-//     if (req.user.id === Number(req.params.id)) {
-//         try {
-//             const selectSQL = "SELECT * FROM post WHERE user_id = ?";
-//             const value = [req.params.id];
-//             const post = await Pool.query(selectSQL, value);
-//             res.status(200).json(post);
-//         } catch (error) {
-//             next(error);
-//         }
-//     } else {
-//         return next(errorHandler(401, 'You can only view your own Post!'));
-//     }
-// };
-
-export const test = async (req, res, next) => {
-    try {
-        console.log("Entered test function"); // Log to check if the function is entered
-        console.log(req.params.id); // Log the parameter value
-        
-        // Simulate a response for testing
-        res.status(200).json({ receivedId: req.params.id });
-    } catch (error) {
-        console.error(error);
-        res.status(500).json({ error: 'Server error' });
+export const getUserPost = async (req, res, next) => {
+    if (req.user.id === Number(req.params.id)) {
+        try {
+            const selectSQL = "SELECT * FROM post WHERE user_id = ?";
+            const value = [req.params.id];
+            const [post] = await Pool.query(selectSQL, value);
+            console.log(post);
+            res.status(200).json(post);
+        } catch (error) {
+            next(error);
+        }
+    } else {
+        return next(errorHandler(401, 'You can only view your own Post!'));
     }
 };
