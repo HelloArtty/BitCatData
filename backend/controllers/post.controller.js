@@ -48,7 +48,6 @@ export const updatePost = async (req, res, next) => {
     try {
         
         const { imageUrls, title, age, description, catBreed, sex, location } = req.body;
-        console.log( imageUrls );
         const updateSQL = "UPDATE post SET imageUrls = ?, title = ?, age = ?, description = ?, catBreed = ?, sex = ?, location = ? WHERE post_id = ?";
         const updateValues = [imageUrls, title, age, description, catBreed, sex, location, req.params.id];
         await Pool.query(updateSQL, updateValues);

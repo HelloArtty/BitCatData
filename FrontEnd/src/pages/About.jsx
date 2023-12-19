@@ -4,9 +4,9 @@ import "../css/About.css";
 const About = () => {
     return (
         <>
-            <div className="section1">
+            <div className="section1 bg-cat2 bg-cover bg-center">
                 <div className="content">
-                    <h1 className="text-6xl font-bold">About Us</h1>
+                    <h1 class="text-7xl md:text-9xl text-slate-1000 font-bold text-center">About Us</h1>
                 </div>
             </div>
             <div className="row-home">
@@ -18,11 +18,15 @@ const About = () => {
                         <h2>
                             About Us
                         </h2>
-                        <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Aliquid asperiores itaque sint minima ullam adipisci molestias, iste at facere pariatur? Labore maxime quae consequuntur distinctio enim possimus perspiciatis suscipit vero!
-                            Ratione deleniti sed, excepturi iusto provident veniam reiciendis animi. Veritatis, perferendis porro. Delectus consequatur, neque animi repudiandae quis, beatae perferendis mollitia labore culpa esse hic expedita ducimus. Asperiores, eum sequi?
-                            Voluptatibus amet repellat dolores provident quo quam facilis molestiae reiciendis. Odio doloremque repellat in, quos eveniet minus aperiam neque modi odit ratione. Deleniti eveniet laborum accusantium tempora natus velit saepe!
-                            Alias magnam praesentium eaque eius facere, est nesciunt nulla consequatur explicabo officia repellat eligendi cumque ducimus possimus fuga nisi porro perspiciatis vero reprehenderit nihil aut aspernatur, quam minima omnis. Necessitatibus!
-                            Consequuntur beatae minima, sed expedita minus at aut. Debitis perspiciatis fugiat id voluptatem similique explicabo reiciendis voluptatibus nesciunt nisi! Exercitationem, hic! Distinctio quis fuga dolor, quas delectus qui molestiae sed!</p>
+                        <p> BitCat was founded with a simple yet profound goal – to be the bridge that brings together cats in search of a forever home and individuals seeking the joy and companionship that only a cat can provide.
+                            As avid cat lovers ourselves, we understand the unique bond that forms between humans and felines, and we are committed to fostering these connections.
+                        </p>
+                        <p>
+                            Our vision is to create a world where every cat has a warm and loving home.
+                            We believe that every cat deserves a chance to experience the comfort and security of a forever family.
+                            By facilitating adoptions and providing a platform for cat enthusiasts,
+                            we hope to make a positive impact on the lives of both cats and their new human companions.
+                        </p>
                     </div>
                 </div>
             </div>
@@ -48,7 +52,7 @@ const About = () => {
                     <div className="card">
                         <div className="member">
                             <img src="https://i.pinimg.com/236x/23/40/89/234089bc5eb6d79757f86b7ad4757cb5.jpg" alt="" />
-                            <p>blablabla blablabalbla</p>
+                            <p>Panicha Kunanuntapong</p>
                             <p>64090500454</p>
                         </div>
                     </div>

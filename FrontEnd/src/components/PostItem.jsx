@@ -15,7 +15,7 @@ export default function PostItem({ post }) {
                     />
                 </div>
                 <div className='p-3 flex flex-col gap-2 w-full'>
-                    <p className='text-lg font-semibold text-slate-1001 truncate'>{post.name}</p>
+                    <p className='text-lg font-semibold text-slate-1001 truncate'>{post.title}</p>
                     <div className='flex gap-1 items-center'>
                         <PiCatDuotone className='h-5 w-5' /> <p className='text-sm text-slate-1002 truncate'>: {post.catBreed}</p>
                     </div>

@@ -47,7 +47,6 @@ export const getUserPost = async (req, res, next) => {
             const selectSQL = "SELECT * FROM post WHERE user_id = ?";
             const value = [req.params.id];
             const [post] = await Pool.query(selectSQL, value);
-            console.log(post);
             res.status(200).json(post);
         } catch (error) {
             next(error);

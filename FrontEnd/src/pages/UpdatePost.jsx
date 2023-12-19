@@ -96,7 +96,7 @@ export default function UpdatePost() {
     const handleRemoveImage = (index) => {
         setFormData({
             ...formData,
-            imageUrls: JSON.parse(formData.imageUrls).filter((_, i) => i !== index),
+            imageUrls: JSON.stringify(JSON.parse(formData.imageUrls).filter((_, i) => i !== index)),
         });
     };
 
@@ -129,6 +129,7 @@ export default function UpdatePost() {
                 }),
             });
             const data = await res.json();
+
             setLoading(false);
             if (data.success === false) {
                 setError(data.message);
