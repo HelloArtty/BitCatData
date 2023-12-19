@@ -86,7 +86,6 @@ export default function Search() {
                 order: order || 'desc'
             });
         }
-        console.log(`${sidebardata.sort}_${sidebardata.order}`);
     };
 
     const handleSubmit = (e) => {

@@ -10,14 +10,11 @@ export const testcontact = (req, res) => {
 export const createContact = async (req, res, next) => {
     try {
         const { phone, user_id } = req.body;
-        const insertSQL = 'INSERT INTO contact (phone) VALUES (?)'
-        const insertValues = [phone];
+        const insertSQL = 'INSERT INTO contact (phone, user_id) VALUES (?, ?)';
+        const insertValues = [phone, user_id];
         await Pool.query(insertSQL, insertValues);
         const [result] = await Pool.query('SELECT * FROM contact WHERE contact_id = LAST_INSERT_ID()');
-        await Pool.query('INSERT INTO user_contact (user_id, contact_id) VALUES (?, ?)', [user_id, result[0].contact_id])
-        const [getResult] = await Pool.query('SELECT * FROM user_contact WHERE contact_id = LAST_INSERT_ID()');
-        const finalResult = getResult[0];
-        // console.log(finalResult);
+        const finalResult = result[0];
         return res.status(201).json(finalResult);
     } catch (error) {
         next(error);

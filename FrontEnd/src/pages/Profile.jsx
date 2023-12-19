@@ -39,17 +39,10 @@ export default function Profile() {
     const [formDataLocation, setFormDataLocation] = useState({
         location: '',
     });
-
-    // console.log(formDataContact);
-    // console.log(formDataLocation);
+    const [ContactSuccess, setContactSuccess] = useState(false);
+    const [LocationSuccess, setLocationSuccess] = useState(false);
 
     const dispatch = useDispatch();
-
-    //firebase storage
-    // allow read;
-    // allow write: if
-    // request.resource.size < 2 * 1024 &&
-    // request.resource.contentType.matches('image/.*')
 
     useEffect(() => {
         if (file) {
@@ -337,6 +330,8 @@ export default function Profile() {
             <p className='text-red-700 mt-5'>{error ? error : ''}</p>
             <p className='text-green-700 mt-5'>{updateSuccess ? 'Profile Updated Successfully!' : ''}</p>
             <p className='text-red-700 mt-5'>{showPostError ? 'Error Showing Post!' : ''}</p>
+            <p className='text-green-700 mt-5'>{ContactSuccess ? 'Contact Added Successfully!' : ''}</p>
+            <p className='text-green-700 mt-5'>{LocationSuccess ? 'Location Added Successfully!' : ''}</p>
 
 
             {userPost &&

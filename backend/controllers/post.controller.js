@@ -3,11 +3,11 @@ import Pool from '../models/db.model.js'
 
 export const createPost = async (req, res, next) => {
     try {
-        const { user_id, imageUrls, title, age, description, catBreed, sex, location } = req.body;
+        const { user_id, imageUrls, title, age, description, catBreed, sex, location, contact } = req.body;
         const imageUrlsJSON = JSON.stringify(imageUrls);
 
-        const insertSQL = 'INSERT INTO post (user_id, imageUrls, title, age, description, catBreed, sex, location) VALUES (?, ?, ?, ?, ?, ?, ?, ?)';
-        const insertValues = [user_id, imageUrlsJSON, title, age, description, catBreed, sex, location];
+        const insertSQL = 'INSERT INTO post (user_id, imageUrls, title, age, description, catBreed, sex, location, contact) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)';
+        const insertValues = [user_id, imageUrlsJSON, title, age, description, catBreed, sex, location, contact];
         await Pool.query(insertSQL, insertValues);
         const [getResult] = await Pool.query('SELECT * FROM post WHERE post_id = LAST_INSERT_ID()');
         const finalResult = getResult[0];
@@ -47,9 +47,9 @@ export const updatePost = async (req, res, next) => {
     }
     try {
         
-        const { imageUrls, title, age, description, catBreed, sex, location } = req.body;
-        const updateSQL = "UPDATE post SET imageUrls = ?, title = ?, age = ?, description = ?, catBreed = ?, sex = ?, location = ? WHERE post_id = ?";
-        const updateValues = [imageUrls, title, age, description, catBreed, sex, location, req.params.id];
+        const { imageUrls, title, age, description, catBreed, sex, location, contact } = req.body;
+        const updateSQL = "UPDATE post SET imageUrls = ?, title = ?, age = ?, description = ?, catBreed = ?, sex = ?, location = ?, contact = ? WHERE post_id = ?";
+        const updateValues = [imageUrls, title, age, description, catBreed, sex, location, contact, req.params.id];
         await Pool.query(updateSQL, updateValues);
         const [result] = await Pool.query("SELECT * FROM post WHERE post_id = ?", [req.params.id]);
         const updatedPost = result[0];

@@ -15,7 +15,6 @@ export const createLocation = async (req, res, next) => {
         await Pool.query(insertSQL, insertValues);
         const [result] = await Pool.query('SELECT * FROM location WHERE location_id = LAST_INSERT_ID()');
         const finalResult = result[0];
-        // console.log(finalResult);
         return res.status(201).json(finalResult);
     } catch (error) {
         next(error);
