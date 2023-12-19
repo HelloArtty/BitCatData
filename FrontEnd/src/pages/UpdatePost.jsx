@@ -20,6 +20,7 @@ export default function UpdatePost() {
         catBreed: '',
         age: '',
         sex: '',
+        location: '',
         description: '',
     });
     const [imageUploadError, setImageUploadError] = useState(false);
@@ -206,6 +207,15 @@ export default function UpdatePost() {
                             <option value="Female">Female</option>
                         </>
                     </select>
+                    <input
+                        type="text"
+                        placeholder="Address"
+                        className=" border-blue-1000 bg-slate-1000 border p-3 rounded-lg"
+                        id='location'
+                        required
+                        onChange={handleChanges}
+                        value={formData.location}
+                    />
                     <textarea
                         type="text"
                         placeholder="Description"

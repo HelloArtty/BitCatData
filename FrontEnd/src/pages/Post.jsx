@@ -75,7 +75,7 @@ export default function post() {
                     )}
                     <div className='flex flex-col max-w-xl mx-auto p-4 my-7 gap-4 border-2 bg-slate-1000 border-slate-500 border-ls'>
                         <p className='text-3xl font-semibold line-clamp-1'>
-                            Name: {post.title}
+                            {post.title}
                         </p>
                         <p className='flex items-center gap-2 text-slate-600  text-l'>
                             <span className='font-semibold text-black'>Cat Breed: </span>{post.catBreed}
@@ -85,6 +85,9 @@ export default function post() {
                         </p>
                         <p className='flex items-center gap-2 text-slate-600  text-l'>
                             <span className='font-semibold text-black'>Sex: </span>{post.sex}
+                        </p>
+                        <p className='flex items-center gap-2 text-slate-600  text-l'>
+                            <span className='font-semibold text-black'>Address: </span>{post.location}
                         </p>
                         <p className='text-slate-800'>
                             <span className='font-semibold text-black'>Description: </span>

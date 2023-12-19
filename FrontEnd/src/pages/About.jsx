@@ -33,16 +33,23 @@ const About = () => {
                 <div className="box">
                     <div className="card">
                         <div className="member">
-                            <img src="https://media.discordapp.net/attachments/806864849488707587/1186093924109000804/IMG_3646.jpg?ex=6591ff0c&is=657f8a0c&hm=8d03a95ac03cffe2e71b9edddf3075b70021ae3e6c76668ad9a53e6cdb5ea2d6&=&format=webp&width=702&height=702" alt="" />
-                            <p>Teekamol Queen</p>
+                            <img src="https://cdn.discordapp.com/attachments/988168701989765160/1186637376643158026/410528324_1335352380432016_3246775920249158811_n.png?ex=6593f92d&is=6581842d&hm=7c1bfb161d01fa25acb4f3f4147e7663ab87a934e3354c85c98334082f0f4f7b&" alt="" />
+                            <p>Teekamol Chaiwongwutthikul</p>
                             <p>65090500409</p>
                         </div>
                     </div>
                     <div className="card">
                         <div className="member">
                             <img src="https://media.discordapp.net/attachments/806864849488707587/1186093924352266260/IMG_3652.jpg?ex=6591ff0c&is=657f8a0c&hm=d3e057f1e9d20560baf63ca3af487465adfe34a4dc0cd5f3be812d43651be664&=&format=webp&width=561&height=702" alt="" />
-                            <p>Chaithawat Salkang</p>
+                            <p>Chaithawat Saklang</p>
                             <p>65090500432</p>
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className="member">
+                            <img src="https://i.pinimg.com/236x/23/40/89/234089bc5eb6d79757f86b7ad4757cb5.jpg" alt="" />
+                            <p>blablabla blablabalbla</p>
+                            <p>64090500454</p>
                         </div>
                     </div>
                 </div>

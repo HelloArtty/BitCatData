@@ -8,10 +8,10 @@ export default function Search() {
         searchTerm: '',
         catBreed: '',
         sex: '',
-        sort: 'post_date', // here created_at
+        sort: 'postDate',
         order: 'desc',
     });
-    console.log(sidebardata)
+    // console.log(sidebardata)
     const [loading, setLoading] = useState(false);
     const [posts, setPosts] = useState([]);
     const [showMore, setShowMore] = useState(false);
@@ -35,7 +35,7 @@ export default function Search() {
                 searchTerm: searchTermFromUrl || '',
                 catBreed: catBreedFromUrl || '',
                 sex: sexFromUrl || '',
-                sort: sortFromUrl || 'post_date', // here created_at
+                sort: sortFromUrl || 'postDate',
                 order: orderFromUrl || 'desc',
             });
         }
@@ -59,37 +59,35 @@ export default function Search() {
     }, [location.search])
 
     const handleChange = (e) => {
-        if (e.target.id === 'searchTerm') {
+        const { id, value } = e.target;
+        if (id === 'searchTerm') {
             setSidebardata({
                 ...sidebardata,
-                searchTerm: e.target.value
-            })
+                searchTerm: value
+            });
         }
-        if (e.target.id === 'catBreed') {
+        if (id === 'catBreed') {
             setSidebardata({
                 ...sidebardata,
-                catBreed: e.target.value
-            })
+                catBreed: value
+            });
         }
-        if (e.target.id === 'sex') {
-
+        if (id === 'sex') {
             setSidebardata({
                 ...sidebardata,
-                sex: e.target.value
-            })
+                sex: value
+            });
         }
-        if (e.target.id === 'sort_order') {
-            let sort;
-            const order = e.target.value.split('_')[1] || 'desc';
-            if(e.target.value.split('_')[0] === 'postDate'){
-                sort = 'post_date';
-            }
-            else{
-                sort =  e.target.value.split('_')[0]; // here 'created_at'
-            }
-            setSidebardata({ ...sidebardata, sort, order })
+        if (id === 'sort_order') {
+            let [sort, order] = value.split('_');
+            setSidebardata({
+                ...sidebardata,
+                sort: sort || 'postDate',
+                order: order || 'desc'
+            });
         }
-    }
+        console.log(`${sidebardata.sort}_${sidebardata.order}`);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault();
